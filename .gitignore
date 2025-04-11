@@ -1,0 +1,7 @@
+# Ignore AppData and cache files
+AppData/
+*.log
+*.cache
+
+*.jtx
+

@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Container Styling */
+    .container {
+        max-width: 800px;
+        margin-top: 30px;
+    }
+
+    /* Card Styling */
+    .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #007bff;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        font-size: 1.25rem;
+    }
+
+    .card-header i {
+        margin-right: 10px;
+    }
+
+    /* Alert Styling */
+    .alert {
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border-color: #bee5eb;
+    }
+    
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-color: #c3e6cb;
+    }
+    
+    .alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border-color: #ffeeba;
+    }
+    
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
+    }
+
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #ced4da;
+        padding: 12px;
+        font-size: 1rem;
+        background-color: #f8f9fa;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.1);
+    }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: #28a745;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+
+    /* Status Badge */
+    .status-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+    
+    .status-pending {
+        background-color: #ffc107;
+        color: #212529;
+    }
+    
+    .status-approved {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    .status-rejected {
+        background-color: #dc3545;
+        color: white;
+    }
+    
+    .status-inactive {
+        background-color: #6c757d;
+        color: white;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-utensils mr-2"></i>Mess Membership Status</h4>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            
+            <div class="alert alert-{{ status_class }}">
+                <p><strong>Status: </strong>{{ status_message }}</p>
+            </div>
+            
+            {% if membership %}
+                <div class="form-group">
+                    <label>Student Name:</label>
+                    <input type="text" class="form-control" value="{{ membership.student.F_Name }} {{ membership.student.L_Name }}" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Registration Number:</label>
+                    <input type="text" class="form-control" value="{{ membership.student.Registration_Number }}" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Department:</label>
+                    <input type="text" class="form-control" value="{{ membership.department }}" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Start Date:</label>
+                    <input type="text" class="form-control" value="{{ membership.start_date }}" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>End Date:</label>
+                    <input type="text" class="form-control" value="{{ membership.end_date }}" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Application Date:</label>
+                    <input type="text" class="form-control" value="{{ membership.date_applied|date:'F d, Y' }}" readonly>
+                </div>
+                
+                {% if not membership.approved %}
+                    <div class="text-center mt-4">
+                        <p class="text-info">Your application is pending approval. Please check back later.</p>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="text-center mt-4">
+                    <p>You don't have an active mess membership.</p>
+                    <a href="{% url 'apply_for_mess' %}" class="btn btn-primary">Apply for Mess Membership</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

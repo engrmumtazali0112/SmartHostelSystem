@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Container Styling */
+    .container {
+        max-width: 800px;
+        margin-top: 30px;
+    }
+
+    /* Card Styling */
+    .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #007bff;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        font-size: 1.25rem;
+    }
+
+    .card-header i {
+        margin-right: 10px;
+    }
+
+    /* Alert Styling */
+    .alert {
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border-color: #bee5eb;
+    }
+
+    /* Input Fields Styling */
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #ced4da;
+        padding: 12px;
+        font-size: 1rem;
+        background-color: #f8f9fa;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.1);
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: #28a745;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+
+    /* General Heading Styling */
+    h4 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .alert-info p {
+        margin-bottom: 0;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-utensils mr-2"></i>Mess Membership Status</h4>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            
+            <div class="alert alert-info">
+                <p><strong>Status: </strong>{{ status_message }}</p>
+            </div>
+            
+            {% if mess_membership %}
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="text" class="form-control" value="{{ mess_membership.start_date }}" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="text" class="form-control" value="{{ mess_membership.end_date }}" readonly>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
